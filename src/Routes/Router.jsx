@@ -7,6 +7,7 @@ import AboutUs from '../pages/AboutUs/AboutUs';
 import HowItWorks from '../pages/HowItWorks/HowItWorks';
 import Register from '../pages/Auth/Register';
 import Login from '../pages/Auth/Login';
+import ResolvedIssueDetails from '../pages/ResolvedIssueDetails/ResolvedIssueDetails';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path:'/howitworks',
         Component:HowItWorks
+      },
+      {
+        path:'/details',
+        Component:ResolvedIssueDetails
       }
     ]
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import Banner from '../../components/Banner';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
+import { Link } from 'react-router';
 
 const Home = () => {
     const axios=useAxios();
@@ -20,9 +21,9 @@ const Home = () => {
             <div>
                 <h1 className='font-bold text-4xl mt-20 mb-10'>latest Resolved Issues</h1>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-6 gap-4'>
                 {
-                    allIssues.map(issue=>
+                    allIssues.slice(0,6).map(issue=>
                         <div key={issue._id} className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-50 to-indigo-100 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
 
                     <div className="absolute top-0 left-0 h-2 w-full bg-linear-to-r from-blue-500 to-purple-600"></div>
@@ -98,9 +99,9 @@ const Home = () => {
                         <p className="font-medium text-gray-800">John Smith</p>
                         </div>
                         
-                        <button className="rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2 font-semibold text-white transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md">
+                        <Link to='/details' className="rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2 font-semibold text-white transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md">
                         View Details
-                        </button>
+                        </Link>
                     </div>
                     </div>
                     )
