@@ -13,6 +13,10 @@
   font-family: 'Inter', sans-serif;
 }
 
+body{
+  background-image: url('/src/assets/background.png');
+}
+
 a.active {
   @apply bg-blue-500;
   @apply text-white;

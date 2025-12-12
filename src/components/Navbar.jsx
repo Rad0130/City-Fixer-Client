@@ -1,16 +1,30 @@
 import React from 'react';
 import logo from '../assets/logo.png';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
+import useAuth from '../Hooks/useAuth';
 
 const Navbar = () => {
+  const {user, logOut}=useAuth();
   const links = <>
     <li><NavLink to='/'>Home</NavLink></li>
     <li><NavLink to='/allissues'>All Issues</NavLink></li>
     <li><NavLink to='/aboutus'>About us</NavLink></li>
     <li><NavLink to='/howitworks'>How It Works</NavLink></li>
   </>
+  const navigate=useNavigate();
+
+  const handleLogOut=()=>{
+    logOut()
+    .then(result=>{
+      console.log('result', result);
+      navigate('/login')
+    })
+    .catch(error=>{
+      console.log(error.message);
+    })
+  }
     return (
-        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 right-0 z-50 max-w-[1600px] mx-auto">
+        <div className="navbar bg-base-100 shadow-sm fixed top-0 left-0 right-0 z-50 px-0 md:px-30">
           <div className="navbar-start">
             <div className="dropdown">
               <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -33,11 +47,24 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="navbar-end">
-            <Link to='/register' className='btn btn-primary mr-2'>Register</Link>
-            <Link to='/login' className='btn btn-primary'>Login</Link>
+            {
+              user? <div className="dropdown dropdown-end">
+                  <div tabIndex={0} role="button" className="btn m-1">Your Profile</div>
+                  <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 p-2 shadow-sm">
+                    <li><span>{user.email}</span></li>
+                    <li><button onClick={handleLogOut} className='btn btn-primary'>logOut</button></li>
+                  </ul>
+                </div> : <div><Link to='/register' className='btn btn-primary mr-2'>Register</Link>
+            <Link to='/login' className='btn btn-primary'>Login</Link></div>
+            }
           </div>
         </div>
     );
 };
 
 export default Navbar;
+
+{/* <div className='flex items-center gap-2'>
+                <span className='font-bold text-xl'>{user.email}</span>
+                <button onClick={handleLogOut} className='btn btn-primary'>logOut</button>
+              </div> */}
