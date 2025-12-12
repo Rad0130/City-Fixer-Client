@@ -1,8 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Navbar from '../../components/Navbar';
+import { useForm } from 'react-hook-form';
+import useAuth from '../../Hooks/useAuth';
 
 const Register = () => {
+    const {register, handleSubmit, formState:{errors}}=useForm();
+    const {createUser}=useAuth();
+
+    const handleRegister=data=>{
+        console.log(data);
+        createUser(data.email, data.password)
+        .then(result=>{
+            const user=result.user;
+            console.log(user);
+        })
+        .catch(error=>{
+            console.log(error.message);
+        })
+
+    }
     return (
         <div>
             <Navbar></Navbar>
@@ -16,16 +33,40 @@ const Register = () => {
             </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
-                <form>
+                <form onSubmit={handleSubmit(handleRegister)}>
                     <fieldset className="fieldset">
-                    <label className="label">Name</label>
-                    <input type="email" className="input" name='name' placeholder="Write your name" />
+                    {/* <label className="label">Name</label>
+                    <input type="text" {...register('text',{
+                        required:true,
+                    })} className="input" name='name' placeholder="Write your name" />
+                    {
+                        errors.text?.type==='required' && <p className='text-red-500'>Name is required</p>
+                    }
                     <label className="label">Photo</label>
-                    <input type="email" className="input" name='photo' placeholder="give your latest photo" />
+                    <input type="text" {...register('text', {
+                        required:true,
+                    })} className="input" name='photo' placeholder="give your latest photo" />
+                    {
+                        errors.text?.type==='required' && <p className='text-red-500'>Photo is required</p>
+                    } */}
                     <label className="label">Email</label>
-                    <input type="email" className="input" name='email' placeholder="Email" />
+                    <input type="email" {...register('email',{
+                        required:true,
+                    })} className="input" name='email' placeholder="Email" />
+                    {
+                        errors.email?.type==='required' && <p className='text-red-500'>Email is required</p>
+                    }
                     <label className="label">Password</label>
-                    <input type="password" className="input" name='password' placeholder="Password" />
+                    <input type="password" {...register('password',{
+                        required:true,
+                        minLength:6
+                    })} className="input" name='password' placeholder="Password" />
+                    {
+                        errors.password?.type==='required' && <p className='text-red-500'>Password is required</p>
+                    }
+                    {
+                        errors.password?.type==='minLength' && <p className='text-red-500'>Password must be 6 characters</p>
+                    }
                     <button className="btn btn-neutral mt-4">Register</button>
                     <div>Already have an account? <Link className='text-blue-500' to='/login'>Login</Link></div>
                     <button type='button' className="btn bg-white text-black border-[#e5e5e5]">

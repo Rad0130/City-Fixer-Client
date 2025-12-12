@@ -1,8 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import Navbar from '../../components/Navbar';
+import { useForm } from 'react-hook-form';
+import useAuth from '../../Hooks/useAuth';
 
 const Login = () => {
+    const {register, handleSubmit, formState:{errors}}=useForm();
+    const {loginUser}=useAuth();
+    const navigate=useNavigate();
+    const handleLogin=data=>{
+        console.log(data);
+        loginUser(data.email, data.password)
+        .then(result=>{
+            const user=result.user;
+            console.log(user);
+            navigate('/')
+        })
+        .catch(error=>{
+            console.log(error.message);
+        })
+    }
     return (
         <div>
             <Navbar></Navbar>
@@ -16,12 +33,22 @@ const Login = () => {
             </div>
             <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
-                <form>
+                <form  onSubmit={handleSubmit(handleLogin)}>
                     <fieldset className="fieldset">
                     <label className="label">Email</label>
-                    <input type="email" className="input" placeholder="Email" />
+                    <input type="email" {...register('email', {
+                        required:true
+                    })} className="input" placeholder="Email" />
+                    {
+                        errors.email?.type==='required' && <p className='text-red-500'>Email is required</p>
+                    }
                     <label className="label">Password</label>
-                    <input type="password" className="input" placeholder="Password" />
+                    <input type="password" {...register('password',{
+                        required:true
+                    })} className="input" placeholder="Password" />
+                    {
+                        errors.password?.type==='required' && <p className='text-red-500'>Password is required</p>
+                    }
                     <div><a className="link link-hover">Forgot password?</a></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                     <div>New to this website? <Link className='text-blue-500' to='/register'>Register</Link></div>
