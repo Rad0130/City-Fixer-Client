@@ -34,7 +34,7 @@ const AboutUsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen mt-16 bg-gradient-to-b from-blue-50 to-white">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
         <div className="container mx-auto px-4">

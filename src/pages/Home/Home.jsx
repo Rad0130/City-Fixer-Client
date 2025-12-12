@@ -3,6 +3,7 @@ import Banner from '../../components/Banner';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router';
+import Features from '../../components/Features';
 
 const Home = () => {
     const axios=useAxios();
@@ -16,7 +17,7 @@ const Home = () => {
     })
 
     return (
-        <div>
+        <div className='mt-16'>
             <Banner></Banner>
             <div>
                 <h1 className='font-bold text-4xl mt-20 mb-10'>latest Resolved Issues</h1>
@@ -24,85 +25,97 @@ const Home = () => {
             <div className='grid grid-cols-1 md:grid-cols-6 gap-4'>
                 {
                     allIssues.slice(0,6).map(issue=>
-                        <div key={issue._id} className="relative overflow-hidden rounded-2xl bg-linear-to-br from-blue-50 to-indigo-100 p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div key={issue._id} className="relative overflow-hidden rounded-xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:shadow-xl hover:ring-2 hover:ring-teal-400">
 
-                    <div className="absolute top-0 left-0 h-2 w-full bg-linear-to-r from-blue-500 to-purple-600"></div>
-                    
-                    <div className="absolute top-4 right-4">
-                        <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-800">
-                        <span className="mr-2 h-2 w-2 rounded-full bg-green-500"></span>
-                        Resolved
-                        </span>
-                    </div>
-                    
-                    <div className="mb-4">
-                        <span className="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-800">
-                        High Priority
-                        </span>
-                    </div>
-                    
-                    <div className="mb-4 overflow-hidden rounded-xl">
-                        <img 
-                        src="https://images.unsplash.com/photo-1596557238586-37c8c832eb2b" 
-                        alt="Pothole on Main Street"
-                        className="h-48 w-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
-                    </div>
-                    
-                    <h3 className="mb-2 text-xl font-bold text-gray-800 line-clamp-1">
-                        Pothole on Main Street
-                    </h3>
-                    
-                    <p className="mb-4 text-gray-600 line-clamp-2">
-                        Large pothole causing traffic disruption near the city center. Requires immediate attention.
-                    </p>
-                    
-                    <div className="mb-4 space-y-2">
-                        <div className="flex items-center">
-                        <svg className="mr-2 h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                        </svg>
-                        <span className="text-gray-700">Road Damage</span>
+                        {/* Header Section: Status and Priority */}
+                        <div className="flex items-center justify-between pb-4 border-b border-dashed border-gray-200 mb-4">
+                            
+                            {/* Status Tag: Prominent Green for Resolved */}
+                            <span className="inline-flex items-center rounded-full bg-teal-500/10 px-3 py-1 text-sm font-semibold text-teal-700 ring-1 ring-inset ring-teal-500/20">
+                                <svg className="mr-1.5 h-4 w-4 fill-current" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-5.468 7.468a.75.75 0 01-1.127.075l-3.5-3.5a.75.75 0 011.06-1.06l2.91 2.91 4.95-6.697a.75.75 0 011.052-.143z" clipRule="evenodd" />
+                                </svg>
+                                Resolved
+                            </span>
+
+                            {/* Priority Badge: Subtle, clear color for High */}
+                            <span className="inline-flex items-center rounded-md bg-red-500/10 px-2.5 py-0.5 text-xs font-medium text-red-700">
+                                High Priority
+                            </span>
                         </div>
-                        <div className="flex items-center">
-                        <svg className="mr-2 h-5 w-5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span className="text-gray-700">Main Street, City Center</span>
+
+                        {/* Issue Title and Description */}
+                        <h3 className="mb-1 text-2xl font-extrabold text-gray-900 line-clamp-1">
+                            Pothole on Main Street
+                        </h3>
+                        <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+                            Large pothole causing traffic disruption near the city center. Requires immediate attention.
+                        </p>
+
+                        {/* Image Preview (Optional, but kept for visual appeal) */}
+                        <div className="mb-4 overflow-hidden rounded-lg shadow-sm">
+                            <img
+                                src="https://images.unsplash.com/photo-1596557238586-37c8c832eb2b"
+                                alt="Pothole on Main Street"
+                                className="h-40 w-full object-cover transition-transform duration-500 hover:scale-105"
+                            />
                         </div>
-                    </div>
-                    
-                    <div className="mb-6 flex items-center justify-between border-t border-gray-200 pt-4">
-                        <div className="flex items-center">
-                        <svg className="mr-2 h-5 w-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                        </svg>
-                        <div>
-                            <p className="text-sm text-gray-500">Assigned to</p>
-                            <p className="font-medium text-gray-800">Road Maintenance Dept</p>
+
+                        {/* Details Grid: Category, Location, Upvotes */}
+                        <div className="grid grid-cols-3 gap-4 border-t border-gray-100 pt-4 mb-4">
+                            {/* Type/Category */}
+                            <div className="col-span-1">
+                                <p className="text-xs font-medium uppercase text-gray-500">Category</p>
+                                <div className="flex items-center mt-1">
+                                    <svg className="mr-1 h-4 w-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                    </svg>
+                                    <span className="text-sm font-medium text-gray-800">Road Damage</span>
+                                </div>
+                            </div>
+
+                            {/* Location */}
+                            <div className="col-span-1">
+                                <p className="text-xs font-medium uppercase text-gray-500">Location</p>
+                                <div className="flex items-center mt-1">
+                                    <svg className="mr-1 h-4 w-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    <span className="text-sm font-medium text-gray-800 truncate">Main Street, City Center</span>
+                                </div>
+                            </div>
+
+                            {/* Upvotes */}
+                            <div className="col-span-1 text-right">
+                                <p className="text-xs font-medium uppercase text-gray-500">Upvotes</p>
+                                <div className="flex items-center justify-end mt-1">
+                                    <svg className="mr-1 h-4 w-4 text-red-500 fill-current" viewBox="0 0 20 20">
+                                        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
+                                    </svg>
+                                    <span className="text-sm font-bold text-gray-800">45</span>
+                                </div>
+                            </div>
                         </div>
+
+                        {/* Footer Section: Assigned To and Reporter */}
+                        <div className="flex items-center justify-between border-t border-gray-100 pt-4">
+                            {/* Assigned To */}
+                            <div>
+                                <p className="text-xs font-medium uppercase text-gray-500">Assigned To</p>
+                                <div className="flex items-center mt-1">
+                                    <svg className="mr-1 h-4 w-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    <p className="text-sm font-medium text-gray-800">Road Maintenance Dept</p>
+                                </div>
+                            </div>
+                            
+                            {/* View Details Button */}
+                            <Link to='/details' className="rounded-full bg-teal-600 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+                                View Details
+                            </Link>
                         </div>
-                        
-                        <div className="flex items-center rounded-full bg-linear-to-r from-blue-100 to-indigo-100 px-4 py-2">
-                        <svg className="mr-2 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                        </svg>
-                        <span className="font-bold text-gray-800">45</span>
-                        <span className="ml-1 text-sm text-gray-600">Upvotes</span>
-                        </div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                        <div>
-                        <p className="text-sm text-gray-500">Reported by</p>
-                        <p className="font-medium text-gray-800">John Smith</p>
-                        </div>
-                        
-                        <Link to='/details' className="rounded-lg bg-linear-to-r from-blue-600 to-indigo-600 px-6 py-2 font-semibold text-white transition-all hover:from-blue-700 hover:to-indigo-700 hover:shadow-md">
-                        View Details
-                        </Link>
-                    </div>
                     </div>
                     )
                 }
@@ -118,58 +131,8 @@ const Home = () => {
                     </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {/* <!-- Feature 1 --> */}
-                    <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div className="w-16 h-16 rounded-full bg-linear-to-r from-blue-500 to-purple-500 flex items-center justify-center mb-6">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3">Real-time Tracking</h3>
-                        <p className="text-gray-600">
-                        Track your reported issues from submission to resolution with live updates and notifications.
-                        </p>
-                    </div>
-
-                    {/* <!-- Feature 2 --> */}
-                    <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div className="w-16 h-16 rounded-full bg-linear-to-r from-green-500 to-teal-500 flex items-center justify-center mb-6">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3">Fast Response</h3>
-                        <p className="text-gray-600">
-                        Priority routing ensures critical issues get immediate attention from relevant departments.
-                        </p>
-                    </div>
-
-                    {/* <!-- Feature 3 --> */}
-                    <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div className="w-16 h-16 rounded-full bg-linear-to-r from-orange-500 to-red-500 flex items-center justify-center mb-6">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3">Community Support</h3>
-                        <p className="text-gray-600">
-                        Upvote issues to show importance and collaborate with neighbors on community problems.
-                        </p>
-                    </div>
-
-                    {/* <!-- Feature 4 --> */}
-                    <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div className="w-16 h-16 rounded-full bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-6">
-                        <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                        </svg>
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-800 mb-3">Data Insights</h3>
-                        <p className="text-gray-600">
-                        Comprehensive analytics help city officials make data-driven decisions for infrastructure planning.
-                        </p>
-                    </div>
+                    <div>
+                        <Features></Features>
                     </div>
                 </div>
             </section>
@@ -236,7 +199,7 @@ const Home = () => {
                     <div className="w-20 h-20 rounded-full bg-linear-to-r from-purple-500 to-pink-600 flex items-center justify-center mb-6 relative z-10">
                         <span className="text-2xl font-bold text-white">4</span>
                     </div>
-                    <div class="bg-purple-50 p-6 rounded-2xl">
+                    <div className="bg-purple-50 p-6 rounded-2xl">
                         <h3 className="text-xl font-bold text-gray-800 mb-3">Resolution & Feedback</h3>
                         <p className="text-gray-600">
                         Issue gets resolved and closed. Provide feedback to help improve city services.

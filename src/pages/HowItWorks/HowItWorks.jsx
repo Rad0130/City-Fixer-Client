@@ -56,7 +56,7 @@ const HowItWorks = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-blue-100">
+    <div className="min-h-screen mt-16 bg-gradient-to-b from-gray-50 to-blue-100">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg">
         <div className="container mx-auto px-4">
