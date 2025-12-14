@@ -49,9 +49,9 @@ const Navbar = () => {
           <div className="navbar-end">
             {
               user? <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn m-1">Your Profile</div>
-                  <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 p-2 shadow-sm">
-                    <li><span>{user.email}</span></li>
+                  <div tabIndex={0} role="button" className="m-1"><img className='w-10 h-10 rounded-full cursor-pointer' src={user.photoURL} alt={user.displayName} /></div>
+                  <ul tabIndex="-1" className="dropdown-content menu bg-base-100 rounded-box z-1 w-60 p-2 shadow-sm">
+                    <li><span>{user.displayName}</span></li>
                     <li><button onClick={handleLogOut} className='btn btn-primary'>logOut</button></li>
                   </ul>
                 </div> : <div><Link to='/register' className='btn btn-primary mr-2'>Register</Link>
@@ -63,8 +63,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-{/* <div className='flex items-center gap-2'>
-                <span className='font-bold text-xl'>{user.email}</span>
-                <button onClick={handleLogOut} className='btn btn-primary'>logOut</button>
-              </div> */}

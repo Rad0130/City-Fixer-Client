@@ -1,24 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Navbar from '../../components/Navbar';
 import { useForm } from 'react-hook-form';
 import useAuth from '../../Hooks/useAuth';
+import axios from 'axios';
 
 const Register = () => {
     const {register, handleSubmit, formState:{errors}}=useForm();
-    const {createUser, googleLogin}=useAuth();
+    const {createUser, googleLogin, updateUserProfile}=useAuth();
+    const [error,setError]=useState('');
     const navigate=useNavigate();
 
     const handleRegister=data=>{
         console.log(data);
+        const profileImage=data.photo[0];
         createUser(data.email, data.password)
         .then(result=>{
             const user=result.user;
             console.log(user);
             navigate('/')
+            const formData=new FormData();
+            formData.append('image', profileImage);
+            const Image_url=`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Host}`;
+            axios.post(Image_url, formData)
+            .then(res=>{
+                console.log('after Upload',res.data.data.url);
+                const updatedProfile={
+                    displayName:data.name,
+                    photoURL:res.data.data.url
+                }
+                updateUserProfile(updatedProfile)
+                .then(res=>{
+                    console.log(res.user);
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            })
+            .catch(err=>{
+                console.log(err);
+            })
         })
         .catch(error=>{
             console.log(error.message);
+            setError(error.message);
         })
 
     }
@@ -30,6 +55,7 @@ const Register = () => {
         })
         .catch(error=>{
             console.log(error.message);
+            setError(error.message);
         })
     }
     return (
@@ -47,24 +73,29 @@ const Register = () => {
             <div className="card-body">
                 <form onSubmit={handleSubmit(handleRegister)}>
                     <fieldset className="fieldset">
-                    {/* <label className="label">Name</label>
-                    <input type="text" {...register('text',{
+                        {
+                            error && <p className='text-red-500'>{error}</p>
+                        }
+                    <label className="label">Name</label>
+                    <input type="text" {...register('name',{
                         required:true,
-                    })} className="input" name='name' placeholder="Write your name" />
+                    })} className="input" placeholder="Write Your Name" />
                     {
-                        errors.text?.type==='required' && <p className='text-red-500'>Name is required</p>
+                        errors.name?.type==='required' && <p className='text-red-500'>Name is required</p>
                     }
-                    <label className="label">Photo</label>
-                    <input type="text" {...register('text', {
-                        required:true,
-                    })} className="input" name='photo' placeholder="give your latest photo" />
+                    {/* photo upload field */}
+                    <label className='label'>Photo</label>
+                    <input type="file" {...register('photo', {
+                        required:true
+                    })} className="file-input" placeholder='Uplaod Your Photo'/>
                     {
-                        errors.text?.type==='required' && <p className='text-red-500'>Photo is required</p>
-                    } */}
+                        errors.photo?.type==='required' && <p className='text-red-500'>Photo is required</p>
+                    }
+                    {/* email pass field */}
                     <label className="label">Email</label>
                     <input type="email" {...register('email',{
                         required:true,
-                    })} className="input" name='email' placeholder="Email" />
+                    })} className="input" placeholder="Email" />
                     {
                         errors.email?.type==='required' && <p className='text-red-500'>Email is required</p>
                     }
@@ -72,7 +103,7 @@ const Register = () => {
                     <input type="password" {...register('password',{
                         required:true,
                         minLength:6
-                    })} className="input" name='password' placeholder="Password" />
+                    })} className="input" placeholder="Password" />
                     {
                         errors.password?.type==='required' && <p className='text-red-500'>Password is required</p>
                     }

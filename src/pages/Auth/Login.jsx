@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import Navbar from '../../components/Navbar';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import useAuth from '../../Hooks/useAuth';
 const Login = () => {
     const {register, handleSubmit, formState:{errors}}=useForm();
     const {loginUser, googleLogin}=useAuth();
+    const [error,setError]=useState('');
     const navigate=useNavigate();
     const handleLogin=data=>{
         console.log(data);
@@ -18,6 +19,7 @@ const Login = () => {
         })
         .catch(error=>{
             console.log(error.message);
+            setError(error.message);
         })
     }
     const handleGoogleLogin=()=>{
@@ -28,6 +30,7 @@ const Login = () => {
         })
         .catch(error=>{
             console.log(error.message);
+            setError(error.message);
         })
     }
     return (
@@ -45,6 +48,9 @@ const Login = () => {
             <div className="card-body">
                 <form  onSubmit={handleSubmit(handleLogin)}>
                     <fieldset className="fieldset">
+                        {
+                            error && <p className='text-red-500'>{error}</p>
+                        }
                     <label className="label">Email</label>
                     <input type="email" {...register('email', {
                         required:true
@@ -59,7 +65,7 @@ const Login = () => {
                     {
                         errors.password?.type==='required' && <p className='text-red-500'>Password is required</p>
                     }
-                    <div><a className="link link-hover">Forgot password?</a></div>
+                    <div><Link to='/forget' className="link link-hover">Forgot password?</Link></div>
                     <button className="btn btn-neutral mt-4">Login</button>
                     <div>New to this website? <Link className='text-blue-500' to='/register'>Register</Link></div>
                     <button onClick={handleGoogleLogin} type='button' className="btn bg-white text-black border-[#e5e5e5]">

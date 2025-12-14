@@ -78,6 +78,32 @@ const Features = () => {
                         </p>
                     </div>
             </SwiperSlide>
+            <SwiperSlide>
+                <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="w-16 h-16 rounded-full bg-linear-to-r from-cyan-500 to-blue-600 flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Smart Issue Categorization</h3>
+                <p className="text-gray-600">
+                    Automatically categorizes reported problems to ensure faster routing to the right city departments.
+                </p>
+                </div>
+            </SwiperSlide>
+            <SwiperSlide>
+                <div className="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="w-16 h-16 rounded-full bg-linear-to-r from-emerald-500 to-lime-500 flex items-center justify-center mb-6">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3zm0 0c-3.314 0-6 1.79-6 4v2h12v-2c0-2.21-2.686-4-6-4z" />
+                    </svg>
+                </div>
+                <h3 className="text-xl font-bold text-gray-800 mb-3">Verified Authority Updates</h3>
+                <p className="text-gray-600">
+                    Receive transparent progress updates directly from verified city officials for better trust and accountability.
+                </p>
+                </div>
+            </SwiperSlide>
         </Swiper>
     );
 };

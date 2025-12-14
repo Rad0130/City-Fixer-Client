@@ -8,11 +8,14 @@ import HowItWorks from '../pages/HowItWorks/HowItWorks';
 import Register from '../pages/Auth/Register';
 import Login from '../pages/Auth/Login';
 import ResolvedIssueDetails from '../pages/ResolvedIssueDetails/ResolvedIssueDetails';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import ForgetPassword from '../pages/Forget/ForgetPassword';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component:RootLayout,
+    errorElement:<ErrorPage></ErrorPage>,
     children:[
       {
         index:true,
@@ -43,6 +46,10 @@ const router = createBrowserRouter([
   {
     path:'/login',
     Component:Login
+  },
+  {
+    path:'/forget',
+    Component:ForgetPassword
   }
 ]);
 
