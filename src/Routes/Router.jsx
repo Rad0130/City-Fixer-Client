@@ -10,6 +10,7 @@ import Login from '../pages/Auth/Login';
 import ResolvedIssueDetails from '../pages/ResolvedIssueDetails/ResolvedIssueDetails';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import ForgetPassword from '../pages/Forget/ForgetPassword';
+import PrivateRoute from './PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
       },
       {
         path:'/details',
-        Component:ResolvedIssueDetails
+        element:<PrivateRoute><ResolvedIssueDetails></ResolvedIssueDetails></PrivateRoute>
       }
     ]
   },
