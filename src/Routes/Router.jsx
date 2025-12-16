@@ -2,15 +2,16 @@ import React from 'react';
 import { createBrowserRouter } from "react-router";
 import RootLayout from '../Layouts/RootLayout';
 import Home from '../pages/Home/Home';
-import AllIssues from '../pages/AllIssues/AllIssues';
 import AboutUs from '../pages/AboutUs/AboutUs';
 import HowItWorks from '../pages/HowItWorks/HowItWorks';
 import Register from '../pages/Auth/Register';
 import Login from '../pages/Auth/Login';
-import ResolvedIssueDetails from '../pages/ResolvedIssueDetails/ResolvedIssueDetails';
 import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import ForgetPassword from '../pages/Forget/ForgetPassword';
 import PrivateRoute from './PrivateRoute';
+import IssueDetails from '../pages/Issues/IssueDetails';
+import ResolvedIssueDetails from '../pages/Issues/ResolvedIssueDetails';
+import AllIssues from '../pages/Issues/AllIssues';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
         Component:HowItWorks
       },
       {
-        path:'/details',
+        path:'/details/:id',
+        element:<PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
+      },
+      {
+        path:'/resolved/:id',
         element:<PrivateRoute><ResolvedIssueDetails></ResolvedIssueDetails></PrivateRoute>
       }
     ]

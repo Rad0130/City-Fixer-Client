@@ -55,7 +55,7 @@ const Home = () => {
                         {/* Image Preview (Optional, but kept for visual appeal) */}
                         <div className="mb-4 overflow-hidden rounded-lg shadow-sm">
                             <img
-                                src="https://images.unsplash.com/photo-1596557238586-37c8c832eb2b"
+                                src="https://i.postimg.cc/9ftvcnnQ/parking.jpg"
                                 alt="Pothole on Main Street"
                                 className="h-40 w-full object-cover transition-transform duration-500 hover:scale-105"
                             />
@@ -112,7 +112,7 @@ const Home = () => {
                             </div>
                             
                             {/* View Details Button */}
-                            <Link to='/details' className="rounded-full bg-teal-600 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
+                            <Link to={`/resolved/${issue._id}`} className="rounded-full bg-teal-600 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-500/50">
                                 View Details
                             </Link>
                         </div>
