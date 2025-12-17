@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useAxios from '../../Hooks/useAxios';
 import { useQuery } from '@tanstack/react-query';
 import IssueCard from './IssueCard';
+import NoIssuesFound from './NoIssuesFound';
 
 const AllIssues = () => {
     const axios = useAxios();
@@ -10,9 +11,11 @@ const AllIssues = () => {
         status:[],
         priority:[]
     })
+    const [search,setSearch]=useState('');
 
-    const { data: issues = [] } = useQuery({
-        queryKey: ['issues', filters],
+
+    const { data: issues = [], isLoading, isFetching} = useQuery({
+        queryKey: ['issues', filters, search],
         queryFn: async () => {
             const params = new URLSearchParams();
 
@@ -25,10 +28,20 @@ const AllIssues = () => {
             if (filters.priority.length)
             params.append('priority', filters.priority.join(','));
 
+            if(search){
+                params.append('search', search);
+            }
+
             const res = await axios.get(`/issues?${params.toString()}`);
             return res.data;
-        }
+        },
     });
+
+    if(isLoading){
+        return <div className='flex justify-center items-center min-h-screen'>
+        <span className="loading loading-spinner text-primary"></span>
+        </div>
+    }
 
     const isSelected = (type, value) =>
     filters[type].includes(value);
@@ -151,15 +164,26 @@ const AllIssues = () => {
                         <path d="m21 21-4.3-4.3"></path>
                         </g>
                     </svg>
-                    <input type="search" required placeholder="Search" />
+                    <input onChange={(e)=>setSearch(e.target.value)} value={search} type="search" required placeholder="Search" />
                     </label>
                 </div>
             </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-5 gap-5'>
-                {
-                    issues.map(issue=> <IssueCard key={issue._id} issue={issue}></IssueCard> )
-                }
+            {isFetching && (
+                <div className="flex justify-center my-3">
+                    <span className="loading loading-spinner loading-sm text-primary"></span>
+                </div>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+            {issues.length === 0 && !isFetching ? (
+                <div className="md:col-span-5">
+                <NoIssuesFound />
+                </div>
+            ) : (
+                issues.map(issue => (
+                <IssueCard key={issue._id} issue={issue} />
+                ))
+            )}
             </div>
         </div>
     );
