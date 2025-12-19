@@ -10,7 +10,6 @@ import ErrorPage from '../pages/ErrorPage/ErrorPage';
 import ForgetPassword from '../pages/Forget/ForgetPassword';
 import PrivateRoute from './PrivateRoute';
 import IssueDetails from '../pages/Issues/IssueDetails';
-import ResolvedIssueDetails from '../pages/Issues/ResolvedIssueDetails';
 import AllIssues from '../pages/Issues/AllIssues';
 
 const router = createBrowserRouter([
@@ -38,10 +37,6 @@ const router = createBrowserRouter([
       {
         path:'/details/:id',
         element:<PrivateRoute><IssueDetails></IssueDetails></PrivateRoute>
-      },
-      {
-        path:'/resolved/:id',
-        element:<PrivateRoute><ResolvedIssueDetails></ResolvedIssueDetails></PrivateRoute>
       }
     ]
   },

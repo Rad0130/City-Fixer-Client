@@ -12,12 +12,14 @@ const AllIssues = () => {
         priority: []
     });
     const [search, setSearch] = useState('');
+    const [count,setCount] = useState(0);
+    const [currentPage,setCurrentPage]=useState(1);
     
     const searchInputRef = useRef(null);
     const isTypingRef = useRef(false);
 
     const { data: issues = [], isLoading, isFetching } = useQuery({
-        queryKey: ['issues', filters, search],
+        queryKey: ['issues', filters, search, currentPage],
         queryFn: async () => {
             const params = new URLSearchParams();
 
@@ -34,13 +36,19 @@ const AllIssues = () => {
                 params.append('search', search);
             }
 
-            const res = await axios.get(`/issues?${params.toString()}`);
+            const res = await axios.get(`/issues?${params.toString()}&limit=10&skip=${currentPage*10}`);
             return res.data;
         },
         keepPreviousData: true,
         staleTime: 3000,
         cacheTime: 10000,
     });
+
+    useEffect(()=>{
+        axios.get('/issues/count').then(res=>{
+            setCount(res.data.count);
+        });
+    },[axios]);
 
     // Handle search input focus
     const handleSearchChange = (e) => {
@@ -89,7 +97,7 @@ const AllIssues = () => {
         <div className='mt-20 mb-5'>
             <div className='flex flex-col md:flex-row items-center justify-between mb-4'>
                 <div>
-                    <h2 className='text-3xl font-bold'>Complained Issues({issues.length})</h2>
+                    <h2 className='text-3xl font-bold'>Complained Issues({count})</h2>
                 </div>
                 <div className='flex flex-row-reverse items-center gap-5'>
                     <div className="dropdown dropdown-start">
@@ -205,8 +213,24 @@ const AllIssues = () => {
                     ))
                 )}
             </div>
+            <div className='flex justify-center my-10'>
+                <div className='flex gap-4 flex-wrap'>
+                    {
+                        <button onClick={()=>setCurrentPage(currentPage-1)} className={`btn ${currentPage===0 && "btn-disabled"}`}>
+                            Prev
+                        </button>
+                    }
+                    {
+                        [...Array(Math.ceil(count/10)).keys()].map(i=><button onClick={()=>setCurrentPage(i)} className={`btn ${i===currentPage && "btn-primary"}`}>{i+1}</button>)
+                    }
+                    {
+                        <button onClick={()=>setCurrentPage(currentPage+1)} className={`btn ${currentPage===(Math.ceil(count/10))-1 && "btn-disabled"}`}>
+                            Next
+                        </button>
+                    }
+                </div>
+            </div>
         </div>
     );
 };
-
 export default AllIssues;
