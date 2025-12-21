@@ -13,7 +13,7 @@ const AllIssues = () => {
     });
     const [search, setSearch] = useState('');
     const [count,setCount] = useState(0);
-    const [currentPage,setCurrentPage]=useState(1);
+    const [currentPage,setCurrentPage]=useState(0);
     
     const searchInputRef = useRef(null);
     const isTypingRef = useRef(false);
@@ -221,7 +221,7 @@ const AllIssues = () => {
                         </button>
                     }
                     {
-                        [...Array(Math.ceil(count/10)).keys()].map(i=><button onClick={()=>setCurrentPage(i)} className={`btn ${i===currentPage && "btn-primary"}`}>{i+1}</button>)
+                        [...Array(Math.ceil(count/10)).keys()].map(i=><button key={i} onClick={()=>setCurrentPage(i)} className={`btn ${i===currentPage && "btn-primary"}`}>{i+1}</button>)
                     }
                     {
                         <button onClick={()=>setCurrentPage(currentPage+1)} className={`btn ${currentPage===(Math.ceil(count/10))-1 && "btn-disabled"}`}>
